@@ -8,7 +8,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import java.io.File;
 import java.util.Iterator;
 
-public class JgitTest {
+public class LogCommdTest {
 
     private static final int LOG_NUMBER = 10;
 
@@ -23,8 +23,8 @@ public class JgitTest {
             ObjectId head = repository.resolve(Constants.HEAD);
             Iterable<RevCommit> revCommits = git.log().add(head).setMaxCount(LOG_NUMBER).call();
             Iterator<RevCommit> iterator = revCommits.iterator();
-            while (iterator.hasNext()) {
-                RevCommit revCommit = iterator.next();
+            for (Iterator<RevCommit> it = iterator; it.hasNext(); ) {
+                RevCommit revCommit = it.next();
                 String meg = revCommit.getFullMessage();
                 System.out.println(meg);
             }
