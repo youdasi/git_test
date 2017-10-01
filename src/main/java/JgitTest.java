@@ -1,5 +1,6 @@
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.LogCommand;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -9,6 +10,8 @@ import java.util.Iterator;
 
 public class JgitTest {
 
+    private static final int LOG_NUMBER = 10;
+
     public static void main(String[] args) {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         File gitFile = new File(".git");
@@ -17,8 +20,8 @@ public class JgitTest {
                 .findGitDir()
                 .build()) {
             Git git = new Git(repository);
-            LogCommand logCommand = git.log();
-            Iterable<RevCommit> revCommits = logCommand.call();
+            ObjectId head = repository.resolve(Constants.HEAD);
+            Iterable<RevCommit> revCommits = git.log().add(head).setMaxCount(LOG_NUMBER).call();
             Iterator<RevCommit> iterator = revCommits.iterator();
             while (iterator.hasNext()) {
                 RevCommit revCommit = iterator.next();
