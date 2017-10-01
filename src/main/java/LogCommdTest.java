@@ -25,8 +25,8 @@ public class LogCommdTest {
             Iterator<RevCommit> iterator = revCommits.iterator();
             for (Iterator<RevCommit> it = iterator; it.hasNext(); ) {
                 RevCommit revCommit = it.next();
-                String meg = revCommit.getFullMessage();
-                System.out.println(meg);
+                String meg = revCommit.getShortMessage();
+                System.out.println(meg + " " + revCommit.getCommitterIdent().getName());
             }
         } catch (Exception e) {
             e.printStackTrace();
